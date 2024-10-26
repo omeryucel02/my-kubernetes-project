@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: webserver
+  name: webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webserver
+  template:
+    metadata:
+      labels:
+        app: webserver
+    spec:
+      containers:
+      - image: omeryucel02/webserver
+        name: webserver
+        ports:
+        - containerPort: 80
+        resources: {}
+        envFrom:
+           - secretRef:
+               name: mysql-secret
+           - configMapRef:
+               name: server-config
+
